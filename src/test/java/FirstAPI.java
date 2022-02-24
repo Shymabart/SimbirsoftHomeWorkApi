@@ -32,6 +32,8 @@ public class FirstAPI {
                 .extract().jsonPath().getList("data", UserPojos.class);
 
         assertThat(users.get(0).getEmail()).isEqualTo("george.bluth@reqres.in");
+        assertThat(users.get(0).getFirst_name()).isEqualTo("George");
+        assertThat(users.get(0).getLast_name()).isEqualTo("Bluth");
     }
 
     @Test

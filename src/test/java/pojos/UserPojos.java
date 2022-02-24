@@ -7,11 +7,6 @@ import lombok.Data;
 @JsonIgnoreProperties (ignoreUnknown = true)
 public class UserPojos{
     private int id;
-
-    /*public String getEmail() {
-        return email;
-    }*/
-
     private String email;
     private String first_name;
     private String last_name;
