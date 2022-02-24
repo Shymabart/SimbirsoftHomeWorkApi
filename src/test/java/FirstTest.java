@@ -12,7 +12,7 @@ import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class FirstAPI {
+public class FirstTest {
     private static final RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("https://reqres.in/api")
             .setBasePath("/users")
