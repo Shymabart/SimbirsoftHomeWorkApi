@@ -6,6 +6,7 @@ import io.restassured.specification.ResponseSpecification;
 import org.junit.Test;
 import pojos.UserPojos;
 
+
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -38,15 +39,13 @@ public class FirstTest {
 
     @Test
     public  void getUserSecond(){
-        List<UserPojos> users = given().
-                spec(requestSpec)
-                .queryParam("page", "2")
-                .when().get()
-                .then().spec(responseSpec)
-                .extract().jsonPath().getList("data", UserPojos.class);
-
-        assertThat(users.get(0).getEmail()).isEqualTo("michael.lawson@reqres.in");
-        assertThat(users.get(0).getFirst_name()).isEqualTo("Michael");
-        assertThat(users.get(0).getLast_name()).isEqualTo("Lawson");
+             given().
+                    spec(requestSpec)
+                    .queryParam("per_page", 12)
+                    .when().get()
+                    .then().spec(responseSpec)
+                    .body("data.find{it.email=='michael.lawson@reqres.in'}.first_name",equalTo("Michael"))
+                    .body("data.find{it.email=='michael.lawson@reqres.in'}.last_name",equalTo("Lawson"))
+                    .extract().jsonPath().getList("data", UserPojos.class);
+            }
     }
-}

@@ -1,13 +1,14 @@
 package pojos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 @JsonIgnoreProperties (ignoreUnknown = true)
 public class UserPojos{
     private int id;
-    private String email;
+    public String email;
     private String first_name;
     private String last_name;
     private String avatar;
