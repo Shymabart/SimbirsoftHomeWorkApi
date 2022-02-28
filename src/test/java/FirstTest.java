@@ -1,12 +1,11 @@
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.junit.Test;
 import pojos.UserPojos;
-
-
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -23,6 +22,16 @@ public class FirstTest {
     private static final ResponseSpecification responseSpec = new ResponseSpecBuilder()
             .expectStatusCode(200)
             .build();
+
+   public int getTotalCount(){
+         Response responce = given().
+                spec(requestSpec)
+                .when().get()
+                .then().spec(responseSpec)
+                .extract().response();
+        int total = responce.path("total");
+        return total;
+    }
 
     @Test
     public  void getUserFirst(){
@@ -41,11 +50,11 @@ public class FirstTest {
     public  void getUserSecond(){
              given().
                     spec(requestSpec)
-                    .queryParam("per_page", 12)
+                    .queryParam("per_page", getTotalCount())
                     .when().get()
                     .then().spec(responseSpec)
                     .body("data.find{it.email=='michael.lawson@reqres.in'}.first_name",equalTo("Michael"))
-                    .body("data.find{it.email=='michael.lawson@reqres.in'}.last_name",equalTo("Lawson"))
-                    .extract().jsonPath().getList("data", UserPojos.class);
+                    .body("data.find{it.email=='michael.lawson@reqres.in'}.last_name",equalTo("Lawson"));
             }
     }
+
